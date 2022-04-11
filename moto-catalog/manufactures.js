@@ -68,7 +68,7 @@ async function models() {
       }))
       linki.push(modelList.flatMap(item => item))
       page++
-    } else { console.log('htm'); if(html === 'html') { html = 'htm'} else { con = false } }
+    } else { console.log('htm'); if (html === 'html') { html = 'htm' } else { con = false } }
   } while (con)
   console.log(linki.flatMap(item => item).flatMap(item => item), linki.flatMap(item => item).flatMap(item => item).length)
   return modelList
@@ -77,71 +77,55 @@ async function models() {
 
 async function product() {
   const parser = new DomParser
+  const { data: page } = await axios.request({
+    method: 'GET',
+    url: 'https://www.motorcyclespecs.co.za/model/ktm/ktm_125_exc%206%20day%2011.htm',
+    responseType: 'arraybuffer',
+    reponseEncoding: 'binary'
+  });
+  const decoder = new TextDecoder('ISO-8859-1');
+  let html = decoder.decode(page)
+  const dom = parser.parseFromString(html.match(/#BeginEditable "Main(.*?)#EndEditable/gms)[0])
+  const title = '' //title; from props dom.getElementsByTagName('title')[0].innerHTML.replace('&amp;', '&')
+  const domForDesc = html.match(/#BeginEditable "Main(.*?)#EndEditable/gms)[0]
+    .replace(/(<.table>(.*?)<.table>)|(\(adsbygoogle = window.adsbygoogle \|\| \[\]\).push\({}\);)|(\n|\s{2})|(<!-- #EndEditable)|(&nbsp;)|(#BeginEditable "Main%20Content" -->)/gms, '').trim() //dom.getElementsByTagName('p').map(desc => {
 
-  const { data: page } = await axios('https://www.motorcyclespecs.co.za/model/beneli/benelli_900_sei%2078.htm');
-  const dom = parser.parseFromString(page.match(/#BeginEditable "Main(.*?)#EndEditable/gms)[0])
-  const title = '' //dom.getElementsByTagName('title')[0].innerHTML.replace('&amp;', '&')
+  const description = domForDesc
+    .replace(/<p(.*?)>/gms, '%p%')
+    .replace(/<\/p>/gms, '%/p%')
+    .replace(/<(.*?)>/gms, '')
+    .replace(/%p%/gm, '<p class="desc">')
+    .replace(/%\/p%/gm, '</p>')
+    .replace(/(\t)/gm, ' ');
 
-  const description = '' //dom.getElementsByTagName('p').map(desc => {
-    // console.log(desc.textContent.trim().replace(/\s\s/gm, ''))
-  // })
-  // .replace('<p class="auto-translated-information-text"><i>To jest automatyczne tłumaczenie wygenerowane przez software:</i></p><p> Zapasowy olej przekładniowy 80W-90 GL-5, numer części 99000-22930-046, to oryginalna część Suzuki, co oznacza, że jest dokładnie taka sama, jak ta zamontowana fabrycznie, gdy pojazd był nowy </p>', '')
-  // .replace(/<a.+(?=">)">/gm, '')
-  // .replace(/<\/a>/gm, '')
-  // .replace(/<button.*\n.+\n.+/gm, '')
-  // console.log(description)
-
-
-
-  const specs = dom.getElementsByTagName('table')[1].getElementsByTagName('tr').map(tr => {
-    const label = tr.getElementsByTagName('td')[0].textContent.trim().replace(/\s\s/gm, '')
-    const value = tr.getElementsByTagName('td')[1].textContent.trim().replace(/\s\s/gm, '')
-    // console.log(tr.innerHTML.trim().replace(/\s\s/gm, ''))
-    // console.log(label, value)
-  })
   const table = dom.getElementsByTagName('table')[1].innerHTML
-const tableParse = table.match(/<tr(.*?)(?=<tr)/gms).map(tr => {
-  console.log(tr)
-  console.log(`${tr}<`.match(/(?<=>)(.*?)(?=<)/gms).map(a => {
-    const ret = a.replace(/\n|\s\s|&nbsp;/g,'').replace('&quot;', '"').replace(/\\t/g, ' ')
-    return ret === '' || ret === '\t' ? null : ret;
-  }).filter(Boolean), '%%%%')
-  // const content = parser.parseFromString(tr).getElementsByTagName('td').map(td => {
-    // console.log(td.innerHTML)
-    // const label = td.getElementsByTagName('td')[0].textContent.trim().replace(/\s\s/gm, '')
-    // const value = td.getElementsByTagName('td')[1].textContent.trim().replace(/\s\s/gm, '')
-    // console.log(tr.innerHTML.trim().replace(/\s\s/gm, ''))
-    // console.log(label, value)
-  // })
-})
-// console.log(tableParse, ' %%%')
-  // const factory = specs[0].getElementsByTagName('span')[0].innerHTML.trim()
-  // const model = specs[1].getElementsByTagName('span')[0].innerHTML.trim()
+  const tableSpecs = table.match(/<tr(.*?)(?=<tr)/gms).map(tr => {
+    return `${tr}<`.match(/(?<=>)(.*?)(?=<)|<td/gms).map(a => {
+      const ret = a.replace(/\n|\s\s|&nbsp;/g, '').replace('&quot;', '"').replace(/\\t/g, ' ')
 
-  const year = ''//specs[2].getElementsByTagName('span')[0].innerHTML.trim()
+      return ret === '' || ret === '\t' ? null : ret;
+    }).filter(Boolean);
 
-  const breadcrumbs = dom.getElementsByClassName('breadcrumbs')
-  // const category = breadcrumbs.map(i => i.innerHTML)
-  // const status = dom.getElementsByClassName('shadow-box')[0]
+  }).map(item => item.join().replace(/,/g, '').replace('\t', '').split('<td').filter(Boolean))
 
-  // category ? category.shift() : []
+  const year = ''//year(function) from props specs[2].getElementsByTagName('span')[0].innerHTML.trim()
 
   const images = dom.getElementsByTagName('img').map(image => {
     const src = image.attributes.find(i => i.name === 'src')
 
-    return /\.\.\/Gallery/gm.test(src.value) ? src.value.replace('../..', 'https://www.motorcyclespecs.co.za') : null ;
+    return /\.\.\/Gallery/gm.test(src.value) ? src.value.replace('../..', 'https://www.motorcyclespecs.co.za') : null;
   }).filter(Boolean)
+
   const product = {
-    title,
-    description,
-    // factory,
-    // model,
+    title: tableSpecs[0][1],
+    description: description,
+    tableSpecs,
     year,
-    // category,
     images,
-    // status: status ? 'Aktywna' : 'Niekatywna'
   }
+
   console.log(product, ' product')
+
   return product;
 }
 product().catch(error => {
