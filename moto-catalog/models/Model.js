@@ -9,9 +9,9 @@ module.exports.create = async (data) => {
       name: data.name,
       manufactory: data.manufactory,
       years: data.years,
-      galleryId: data.galleryId,
-      specsId: data.specsId,
-      description: data.description
+      detailsId: data.detailsId,
+      custom: data.custom
+
   }).catch(e => { return { status: 'fail', error: e } })
 };
 module.exports.update = async (data) => {
@@ -21,8 +21,8 @@ module.exports.update = async (data) => {
       name: data.name,
       manufactory: data.manufactory,
       years: data.years,
-      galleryId: data.galleryId,
-      specsId: data.specsId,
-      description: data.description
+      detailsId: data.detailsId,
+      custom: data.custom
+
   }).catch(e => { return { status: 'fail', error: e } })
 };

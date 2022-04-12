@@ -1,6 +1,9 @@
 const axios = require('axios');
 const DomParser = require('dom-parser');
+const FactoryModel = require('./models/Manufactory')
+const { uuid } = require('uuidv4');
 var fs = require('fs');
+const { default: knex } = require('knex');
 
 async function manufactures() {
   console.log('STARTARTA')
@@ -12,16 +15,26 @@ async function manufactures() {
   const dom = parser.parseFromString(list)
 
   const manufacturesList = dom.getElementById('table702').getElementsByTagName('a').map(i => {
-    return {
-      link: i.attributes.find(i => i.name === 'href').value,
-      name: i.textContent.replace(/\n|\t/g, '').replace('&amp;', '&')
+    const link = i.attributes.find(i => i.name === 'href').value;
+    const name = i.textContent.replace(/\n|\t/g, '').replace('&amp;', '&').trim()
+    return link && name ? {
+      link,
+      name
+    } : null
+  }).filter(Boolean)
+  await Promise.all(manufacturesList.map(async factory => {
+    const factoryDb = await knex('Manufactories').where('name', factory.name).first()
+    if (!factoryDb) {
+      await FactoryModel.create({
+        id: uuid(),
+        name: factory.name
+      }).catch(e => { console.error(e); return; })
     }
-  })
-  console.log(manufacturesList)
-
+    return
+  }))
   return manufacturesList
 }
-async function models() {
+async function models(link) {
   console.log('STARTARTA')
 
   const parser = new DomParser
@@ -33,7 +46,8 @@ async function models() {
   let linki = [];
   let html = 'html'
   do {
-    const data = await axios(`https://www.motorcyclespecs.co.za/bikes/KTM${page === 1 ? '' : page}.${html}`).catch(e => ({ data: { status: 404 } }));
+    // https://www.motorcyclespecs.co.za/bikes/
+    const data = await axios(`${link}${page === 1 ? '' : page}.${html}`).catch(e => ({ data: { status: 404 } }));
     if (data.status === 200) {
       html = 'html'
 
@@ -70,16 +84,20 @@ async function models() {
       page++
     } else { console.log('htm'); if (html === 'html') { html = 'htm' } else { con = false } }
   } while (con)
-  console.log(linki.flatMap(item => item).flatMap(item => item), linki.flatMap(item => item).flatMap(item => item).length)
-  return modelList
+
+  const models = linki.flatMap(item => item).flatMap(item => item);
+  console.log(models.length)
+
+  return models
 
 }
 
-async function product() {
+async function product(link, title, years) {
   const parser = new DomParser
+  //'https://www.motorcyclespecs.co.za/model/ktm/ktm_125_exc%206%20day%2011.htm'
   const { data: page } = await axios.request({
     method: 'GET',
-    url: 'https://www.motorcyclespecs.co.za/model/ktm/ktm_125_exc%206%20day%2011.htm',
+    url: link,
     responseType: 'arraybuffer',
     reponseEncoding: 'binary'
   });
@@ -108,7 +126,7 @@ async function product() {
 
   }).map(item => item.join().replace(/,/g, '').replace('\t', '').split('<td').filter(Boolean))
 
-  const year = ''//year(function) from props specs[2].getElementsByTagName('span')[0].innerHTML.trim()
+  const year = years; //year(function) from props specs[2].getElementsByTagName('span')[0].innerHTML.trim()
 
   const images = dom.getElementsByTagName('img').map(image => {
     const src = image.attributes.find(i => i.name === 'src')
@@ -117,7 +135,7 @@ async function product() {
   }).filter(Boolean)
 
   const product = {
-    title: tableSpecs[0][1],
+    title: title,
     description: description,
     tableSpecs,
     year,
@@ -132,4 +150,3 @@ manufactures().catch(error => {
   console.log(error)
   process.exit(1);
 });
-:s669M%5t5gpB

@@ -9,6 +9,7 @@ exports.up = function (knex) {
       table.timestamp('created_at').defaultTo(knex.fn.now())
       table.timestamp('updated_at').defaultTo(knex.raw('NULL ON UPDATE CURRENT_TIMESTAMP'))
       table.string("name")
+      table.text("custom")
     })
     .createTable('Models', function (table) {
       table.uuid('modelId').primary()
@@ -17,9 +18,8 @@ exports.up = function (knex) {
       table.string("name")
       table.string('manufactory')
       table.text('years')
-      table.string('galleryId')
-      table.string('specsId')
-      table.text('description')
+      table.string('detailsId')
+      table.text("custom")
     })
     .createTable('Gallery', function (table) {
       table.uuid('galleryId').primary()
@@ -27,11 +27,13 @@ exports.up = function (knex) {
       table.timestamp('updated_at').defaultTo(knex.raw('NULL ON UPDATE CURRENT_TIMESTAMP'))
       table.text("images")
     })
-    .createTable('Specs', function (table) {
-      table.uuid('specsId').primary()
+    .createTable('Details', function (table) {
+      table.uuid('detailsId').primary()
       table.timestamp('created_at').defaultTo(knex.fn.now())
       table.timestamp('updated_at').defaultTo(knex.raw('NULL ON UPDATE CURRENT_TIMESTAMP'))
       table.text("specs")
+      table.text('description')
+      table.string('galleryId')
     })
 };
 
