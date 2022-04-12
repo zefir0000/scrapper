@@ -128,7 +128,8 @@ async function product() {
 
   return product;
 }
-product().catch(error => {
+manufactures().catch(error => {
   console.log(error)
   process.exit(1);
 });
+:s669M%5t5gpB

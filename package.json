@@ -1,16 +1,30 @@
 {
   "name": "scrapper",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "scrapper",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "me",
   "license": "ISC",
   "dependencies": {
+    "@vscode/sqlite3": "^5.0.8",
     "axios": "^0.26.0",
     "dom-parser": "^0.1.6",
-    "jquery": "^3.6.0"
-  }
+    "jquery": "^3.6.0",
+    "knex": "^1.0.5",
+    "mysql2": "^2.3.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zefir0000/scrapper.git"
+  },
+  "keywords": [
+    "motorbike"
+  ],
+  "bugs": {
+    "url": "https://github.com/zefir0000/scrapper/issues"
+  },
+  "homepage": "https://github.com/zefir0000/scrapper#readme"
 }
