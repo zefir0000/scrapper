@@ -1,16 +1,15 @@
+function labelTranslate(label) {
+  return translateLabel.find(item => item.en === label).pl
+}
+
 module.exports.spec = (specArray) => {
   return specArray.map(item => {
     return {
-      label: item[0],
+      label: labelTranslate(item[0]),
       value: item[1]
     }
   })
 };
-
-function labelTranslate(label) {
-  const translate = translateLabel.find(item => item.en === label).pl
-  return translate
-}
 
 const translateLabel = [
   { en: 'Make Model', pl: 'Marka/Model' },
@@ -21,7 +20,7 @@ const translateLabel = [
   { en: 'Compression Ratio', pl: 'Stopień kompresji' },
   { en: 'CoolingSystem', pl: 'System chłodzenia' },
   { en: 'Cooling System', pl: 'System chłodzenia' },
-  { en: 'Induction', pl: 'Gaźnik' },
+  { en: 'Induction', pl: 'Zasilanie' },
   { en: 'Ignition', pl: 'Zapłon' },
   { en: 'Starting', pl: 'Starter' },
   { en: 'Max Power', pl: 'Moc maksymalna' },
@@ -42,8 +41,15 @@ const translateLabel = [
   { en: 'Wheelbase', pl: 'Rozstaw osi' },
   { en: 'Ground Clearance', pl: 'Prześwit' },
   { en: 'Seat Height', pl: 'Wysokość siedzenia' },
-  { en: 'Dry Weight', pl: 'Waga sucha' },
-
-
+  { en: 'Dry Weight', pl: 'Waga na sucho' },
 
 ]
+
+module.exports.spec = (specArray) => {
+  return specArray.map(item => {
+    return {
+      label: labelTranslate(item[0]),
+      value: item[1]
+    }
+  })
+};

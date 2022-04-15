@@ -1,9 +1,9 @@
 const knex = require("../knex.js");
 
-const TABLE_GALLERY = 'Manufactories';
+const TABLE = 'Manufactories';
 
 module.exports.create = async (data) => {
-  return await knex.from(TABLE_GALLERY)
+  return await knex.from(TABLE)
     .insert({
       id: data.id,
       name: data.name,
@@ -11,7 +11,7 @@ module.exports.create = async (data) => {
   }).catch(e => { return { status: 'fail', error: e } })
 };
 module.exports.update = async (data) => {
-  return await knex.from(TABLE_GALLERY)
+  return await knex.from(TABLE)
     .where({ id: data.id })
     .update({
       name: data.name,
