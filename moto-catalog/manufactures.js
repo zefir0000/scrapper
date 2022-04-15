@@ -44,14 +44,15 @@ async function models(link) {
   let items = [];
   let years = [];
   let linki = [];
-  let html = 'html'
+  let coreLink = link
   do {
     // https://www.motorcyclespecs.co.za/bikes/
-    const data = await axios(`${link}${page === 1 ? '' : page}.${html}`).catch(e => ({ data: { status: 404 } }));
+    const data = await axios(coreLink).catch(e => ({ data: { status: 404 } }));
     if (data.status === 200) {
-      html = 'html'
 
       const list = data.data
+      const dom = parser.parseFromString(list)
+      const nextPage =  dom.getElementsByTagName('a').find(item => /next/gmi.test(item.textContent))?.attributes.find(i => i.name === 'href').value;
       const tables = list.match(/(?<=border="5")(.*?)<\/table>/gs)
       const modelList = await Promise.all(tables.map(tab => {
         const table1 = parser.parseFromString(tab);
@@ -82,7 +83,8 @@ async function models(link) {
       }))
       linki.push(modelList.flatMap(item => item))
       page++
-    } else { console.log('htm'); if (html === 'html') { html = 'htm' } else { con = false } }
+      coreLink = 'https://www.motorcyclespecs.co.za/bikes/' + nextPage
+    } else { con = false }
   } while (con)
 
   const models = linki.flatMap(item => item).flatMap(item => item);
@@ -104,7 +106,7 @@ async function product(link, title, years) {
   const decoder = new TextDecoder('ISO-8859-1');
   let html = decoder.decode(page)
   const dom = parser.parseFromString(html.match(/#BeginEditable "Main(.*?)#EndEditable/gms)[0])
-  const title = '' //title; from props dom.getElementsByTagName('title')[0].innerHTML.replace('&amp;', '&')
+  // const title = '' //title; from props dom.getElementsByTagName('title')[0].innerHTML.replace('&amp;', '&')
   const domForDesc = html.match(/#BeginEditable "Main(.*?)#EndEditable/gms)[0]
     .replace(/(<.table>(.*?)<.table>)|(\(adsbygoogle = window.adsbygoogle \|\| \[\]\).push\({}\);)|(\n|\s{2})|(<!-- #EndEditable)|(&nbsp;)|(#BeginEditable "Main%20Content" -->)/gms, '').trim() //dom.getElementsByTagName('p').map(desc => {
 
@@ -146,7 +148,8 @@ async function product(link, title, years) {
 
   return product;
 }
-manufactures().catch(error => {
+models('https://www.motorcyclespecs.co.za/bikes/yamaha.html').catch(error => {
   console.log(error)
   process.exit(1);
 });
+// https://www.motorcyclespecs.co.za/bikes/yamaha.html
