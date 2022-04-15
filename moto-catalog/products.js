@@ -4,7 +4,9 @@ const FactoryModel = require('./models/Manufactory')
 const { uuid } = require('uuidv4');
 const knex = require("./knex");
 
-async function product(link, title, years) {
+module.exports.details = async (link) => {
+
+// async function product(link, title, detailsId) {
   const parser = new DomParser
   //'https://www.motorcyclespecs.co.za/model/ktm/ktm_125_exc%206%20day%2011.htm'
   const { data: page } = await axios.request({
@@ -37,19 +39,15 @@ async function product(link, title, years) {
 
   }).map(item => item.join().replace(/,/g, '').replace('\t', '').split('<td').filter(Boolean))
 
-  const year = years; //year(function) from props specs[2].getElementsByTagName('span')[0].innerHTML.trim()
-
   const images = dom.getElementsByTagName('img').map(image => {
     const src = image.attributes.find(i => i.name === 'src')
 
     return /\.\.\/Gallery/gm.test(src.value) ? src.value.replace('../..', 'https://www.motorcyclespecs.co.za') : null;
   }).filter(Boolean)
-
+  
   const product = {
-    title,
-    description: description,
+    description,
     tableSpecs,
-    year,
     images,
   }
 
@@ -57,7 +55,7 @@ async function product(link, title, years) {
 
   return product;
 }
-models().catch(error => {
-  console.log(error)
-  process.exit(1);
-});
+// models().catch(error => {
+//   console.log(error)
+//   process.exit(1);
+// });
