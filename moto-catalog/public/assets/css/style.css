@@ -963,6 +963,9 @@ span.feature-review {margin-left: 10px;}
     animation-iteration-count: infinite;
     animation-duration:1s;
 }
+.desc {
+    margin: 20px 10px;
+}
 @keyframes example {
     0%   {bottom:0px;}
     100%  {bottom:7px;}

@@ -9,10 +9,14 @@
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
   <!--font-family-->
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i"
+    rel="stylesheet">
 
   <!-- title of site -->
-  <title>Katalog Motocykli</title>
+  <title>
+    <%- moto.Manufactory -%>
+      <%- moto.Name -%>
+  </title>
 
   <!-- For favicon png -->
   <link rel="shortcut icon" type="image/icon" href="/assets/logo/favicon.png" />
@@ -56,16 +60,48 @@
   <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
-  <div class="container">
 
     <%- include('../views/components/header.ejs'); -%>
-      <%- JSON.stringify(moto) -%>
-        <h2> Opis motocykla
-            <%- moto.manufactory -%>  <%- moto.name -%> :
-        </h2>
-        <div>
-          <%- moto.description -%>
+    <div class="container">
+
+      <div style="height:160px"></div>
+      <!-- <center> -->
+        <h1 style="text-align: center; margin: 20px;">
+          <%- moto.Manufactory -%>
+            <%- moto.Name -%>
+        </h1>
+        <p style="float: left;"><img style="padding: 10px;margin-right: 20px;; max-width: 300px;" src="<%- moto.images[0] -%>"/></p>
+        <!-- <%- moto.images[0] -%> -->
+      <!-- </center> -->
+      <!-- <%- JSON.stringify(moto) -%> -->
+        <!-- <h2> Opis motocykla
+          <%- moto.Manufactory -%>
+            <%- moto.Name -%> :
+        </h2> -->
+        <!-- <br> -->
+        <!-- <div> -->
+          <%- moto.Description -%>
+        <!-- </div> -->
+
+        <br><br>
+        <h2 style="width: fit-content;">Dane techniczne: </h2>
+        <br>
+        <center>
+        <div style="max-width: 1000px;">
+          <% moto.Specs.forEach(function(item) { %>
+            <div style="display: flex;">
+              <div
+                style="color: #e99c2e; width:50%; border: 1px outset #f7f7f7; text-align: right; padding: 5px; background-color: rgba(211, 211, 211, 0.24);">
+                <%- item[0] -%>
+              </div>
+              <div
+                style="text-transform: none; color:#616060; width:50%; border: 1px outset #f7f7f7; text-align: left; padding: 5px; background-color: rgba(211, 211, 211, 0.123);">
+                <%- item[1] -%>
+              </div>
+            </div>
+            <% }); %>
         </div>
+      </center>
         <br>
         <%- include('../views/components/footer.ejs'); -%>
 
