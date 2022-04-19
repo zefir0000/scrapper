@@ -1,12 +1,14 @@
 const axios = require('axios');
 const DomParser = require('dom-parser');
-const FactoryModel = require('./models/Manufactory')
+const FactoryModel = require('../models/Manufactory')
 const { uuid } = require('uuidv4');
-const knex = require("./knex");
+const knex = require("../knex");
+const ImageService = require('../helpers/Image.service')
+const GalleryModel = require('../models/Gallery')
 
 module.exports.details = async (link) => {
 
-// async function product(link, title, detailsId) {
+  // async function product(link, title, detailsId) {
   const parser = new DomParser
   //'https://www.motorcyclespecs.co.za/model/ktm/ktm_125_exc%206%20day%2011.htm'
   const { data: page } = await axios.request({
@@ -44,18 +46,28 @@ module.exports.details = async (link) => {
 
     return /\.\.\/Gallery/gm.test(src.value) ? src.value.replace('../..', 'https://www.motorcyclespecs.co.za') : null;
   }).filter(Boolean)
-  
+
   const product = {
     description,
     tableSpecs,
     images,
   }
 
-  console.log(product, ' product')
-
   return product;
 }
-// models().catch(error => {
-//   console.log(error)
-//   process.exit(1);
-// });
+
+module.exports.saveImages = async (images, slug) => {
+  let filePathLarges = [];
+  for (var key in images) {
+    if (key < images.length && key < 10) {
+      const filePath = await ImageService(images[key], `${slug}-${key}`, null)
+      filePathLarges.push(filePath.original)
+    }
+  }
+  const galleryId = uuid();
+  await GalleryModel.create({
+    galleryId: galleryId,
+    images: JSON.stringify(filePathLarges),
+  }).catch(e => { console.error('galleryModel-error', e); throw e })
+  return galleryId
+}

@@ -1,8 +1,8 @@
 const axios = require('axios');
 const DomParser = require('dom-parser');
-const FactoryModel = require('./models/Manufactory')
+const FactoryModel = require('../models/Manufactory')
 const { uuid } = require('uuidv4');
-const knex = require("./knex");
+const knex = require("../knex");
 
 async function manufactures() {
   console.log('START MANUFACTURIES')

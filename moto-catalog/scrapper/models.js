@@ -1,19 +1,13 @@
 const axios = require('axios');
 const DomParser = require('dom-parser');
-const FactoryModel = require('./models/Manufactory')
-const { uuid } = require('uuidv4');
-const knex = require("./knex");
 
 module.exports.models = async (link) => {
-// async function models(link) {
   console.log('START MODELS')
 
-  let page = 1
   let con = true
   let items = [];
   let years = [];
   let linki = [];
-  // let html = 'html'
   let corelink = link
 
   do {
@@ -31,9 +25,8 @@ module.exports.models = async (link) => {
 
       let list = decoder.decode(data.data)
       const dom = parser.parseFromString(list)
-      const nextPage =  dom.getElementsByTagName('a').find(item => /next/gmi.test(item.textContent))?.attributes.find(i => i.name === 'href').value;
-
-      html = 'html'
+      const hrefNextPage = dom.getElementsByTagName('a').find(item => /next/gmi.test(item.textContent))
+      const nextPage = hrefNextPage ? hrefNextPage.attributes.find(i => i.name === 'href').value : null;
 
       const tables = list.match(/(?<=border="5")(.*?)<\/table>/gs)
       const modelList = await Promise.all(tables.map(tab => {
@@ -64,7 +57,7 @@ module.exports.models = async (link) => {
         return result
       }))
       linki.push(modelList.flatMap(item => item))
-      page++
+      
       corelink = 'https://www.motorcyclespecs.co.za/bikes/' + nextPage
     } else { con = false }
   } while (con)
@@ -74,8 +67,3 @@ module.exports.models = async (link) => {
 
   return models
 }
-
-// models('https://www.motorcyclespecs.co.za/bikes/yamaha.html').catch(error => {
-//   console.log(error)
-//   process.exit(1);
-// });

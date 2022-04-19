@@ -1,0 +1,35 @@
+<!--new-arrivals start -->
+<section id="new-arrivals" class="new-arrivals">
+  <div class="container">
+    <div class="section-header">
+      <h2>Producenci motocykli</h2>
+      <!-- <%= JSON.stringify(factories) %> -->
+
+    </div>
+    <!--/.section-header-->
+    <div class="new-arrivals-content">
+      <div class="row">
+        <% factories.forEach(function(item) { %>
+
+          <div class="col-md-3 col-sm-4">
+            <div class="single-new-arrival">
+              <div class="single-new-arrival-bg">
+                <img src="assets/images/collection/arrivals1.png" alt="new-arrivals images">
+                <div class="single-new-arrival-bg-overlay"></div>
+
+
+              </div>
+              <h4><a href="/producent/<%= item.name %>"> <%= item.name %>
+                </a></h4>
+            </div>
+          </div>
+          <% }); %>
+
+      </div>
+    </div>
+  </div>
+  <!--/.container-->
+
+</section>
+<!--/.new-arrivals-->
+<!--new-arrivals end -->

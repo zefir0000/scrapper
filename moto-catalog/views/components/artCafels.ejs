@@ -1,0 +1,43 @@
+<!--blog start -->
+<section id="blog" class="blog">
+  <div class="container">
+    <div class="section-header">
+      <h2>Ostatnio Oglądane</h2>
+
+    </div>
+    <!--/.section-header-->
+    <div class="blog-content">
+      <div class="row">
+        <% recent.forEach(function(item) { %>
+
+          <div class="col-sm-4">
+            <div class="single-blog">
+              <div class="single-blog-img">
+                <center>
+                  <img src="<%= item.images[0] %>" alt="blog image">
+                  <div class="single-blog-img-overlay"></div>
+                </center>
+              </div>
+              <div class="single-blog-txt">
+                <h2><a href="/motocykl/<%= item.name %>"><%= item.manufactory %>
+                      <%= item.name %></a></h2>
+                <h3>
+                  <%= item.years[0] %> -
+                    <%= item.years.length > 1 ? item.years[item.years.length -1] : null %>
+                </h3>
+                <p>
+                  <%- item.description.slice(0,200) %> ...
+
+                </p>
+              </div>
+            </div>
+          </div>
+          <% }); %>
+      </div>
+    </div>
+  </div>
+  <!--/.container-->
+
+</section>
+<!--/.blog-->
+<!--blog end -->
