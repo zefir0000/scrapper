@@ -38,12 +38,12 @@ exports.motocykl = async (req, res) => {
   res.render('motocykl', { moto:{ ...moto, specs: JSON.parse(moto.specs), images: JSON.parse(moto.images) }});
 };
 exports.search = async (req, res) => {
-
+  const offset = req.query.offset || 0;
   const recent = await knex.from('Models').where('name', 'LIKE', `%${req.query.nazwa}%`
     ).orderBy('name')
     .join('Details', {'Models.detailsId': 'Details.detailsId'})
     .join('Gallery', {'Details.galleryId': 'Gallery.galleryId'})
-    .limit(24)
+    .limit(24).offset(offset)
   const response = recent.map(item => ({...item, images: JSON.parse(item.images), years: JSON.parse(item.years)}))
 
   res.render('wyszukaj', { recent: response }) //, { offersCount: offersCount[0]['count(*)'], clientCount: clientCount[0]['count(*)'], noWer: offersCountNoWer[0]['count(*)'], totalView: viewCount[0].total });
