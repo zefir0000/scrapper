@@ -14,19 +14,18 @@
             <div class="single-blog">
               <div class="single-blog-img">
                 <center>
-                  <img src="<%= item.images[0] %>" alt="blog image">
+                  <img src="<%= item.images[0] %>" alt="<%= item.manufactory %> <%= item.name %>" onerror="this.onerror=null;this.src='/assets/images/placeholder.png';" >
                   <div class="single-blog-img-overlay"></div>
                 </center>
               </div>
               <div class="single-blog-txt">
-                <h2><a href="/motocykl/<%= item.name %>"><%= item.manufactory %>
+                <h2><a href="/motocykl/<%= item.slug %>"><%= item.manufactory %>
                       <%= item.name %></a></h2>
                 <h3>
                   <%= item.years[0] %> -
                     <%= item.years.length > 1 ? item.years[item.years.length -1] : null %>
                 </h3>
                 <p>
-                  <%- item.description.slice(0,200) %> ...
 
                 </p>
               </div>
