@@ -1,12 +1,12 @@
 const modelScrap = require('./models')
 const productScrap = require('./products')
-const slugConverter = require('../helpers/slugConverter')
-const randomString = require('../helpers/randomString')
-const ModelsModel = require('../models/Model')
-const DetailsModel = require('../models/Details')
-const GalleryModel = require('../models/Gallery')
+const slugConverter = require('../moto-catalog/helpers/slugConverter')
+const randomString = require('../moto-catalog/helpers/randomString')
+const ModelsModel = require('../moto-catalog/models/Model')
+const DetailsModel = require('../moto-catalog/models/Details')
+const GalleryModel = require('../moto-catalog/models/Gallery')
 
-const knex = require("../knex");
+const knex = require("../moto-catalog/knex");
 const { uuid } = require('uuidv4');
 const BASE_URL = 'https://www.motorcyclespecs.co.za/'
 

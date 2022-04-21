@@ -1,10 +1,10 @@
 const axios = require('axios');
 const DomParser = require('dom-parser');
-const FactoryModel = require('../models/Manufactory')
+const FactoryModel = require('../moto-catalog/models/Manufactory')
 const { uuid } = require('uuidv4');
-const knex = require("../knex");
-const ImageService = require('../helpers/Image.service')
-const GalleryModel = require('../models/Gallery')
+const knex = require("../moto-catalog/knex");
+const ImageService = require('../moto-catalog/helpers/Image.service')
+const GalleryModel = require('../moto-catalog/models/Gallery')
 
 module.exports.details = async (link) => {
 
