@@ -65,37 +65,27 @@
     <div class="container">
 
       <div style="height:160px"></div>
-      <!-- <center> -->
         <h1 style="text-align: center; margin: 20px;">
-          <%- moto.Manufactory -%>
-            <%- moto.Name -%>
+          <%- moto.manufactory -%>
+            <%- moto.name -%>
         </h1>
-        <p style="float: left;"><img style="padding: 10px;margin-right: 20px;; max-width: 300px;" src="<%- moto.images[0] -%>"/></p>
-        <!-- <%- moto.images[0] -%> -->
-      <!-- </center> -->
-      <!-- <%- JSON.stringify(moto) -%> -->
-        <!-- <h2> Opis motocykla
-          <%- moto.Manufactory -%>
-            <%- moto.Name -%> :
-        </h2> -->
-        <!-- <br> -->
-        <!-- <div> -->
-          <%- moto.Description -%>
-        <!-- </div> -->
+        <p style="float: left;"><img style="padding: 10px;margin-right: 20px;; max-width: 50vh;" src="<%- moto.images[0] -%>"/></p>
+
+         <p> <%- moto.description -%></p>
 
         <br><br>
         <h2 style="width: fit-content;">Dane techniczne: </h2>
         <br>
         <center>
         <div style="max-width: 1000px;">
-          <% moto.Specs.forEach(function(item) { %>
+          <% moto.specs.forEach(function(item) { %>
             <div style="display: flex;">
               <div
-                style="color: #e99c2e; width:50%; border: 1px outset #f7f7f7; text-align: right; padding: 5px; background-color: rgba(211, 211, 211, 0.24);">
+                style="color: #e99c2e; width:50%; border: 1px outset #f7f7f7; text-align: right; padding: 10px; background-color: rgba(211, 211, 211, 0.24);">
                 <%- item[0] -%>
               </div>
               <div
-                style="text-transform: none; color:#616060; width:50%; border: 1px outset #f7f7f7; text-align: left; padding: 5px; background-color: rgba(211, 211, 211, 0.123);">
+                style="text-transform: none; color:#616060; width:50%; border: 1px outset #f7f7f7; text-align: left; padding: 10px; background-color: rgba(211, 211, 211, 0.123);">
                 <%- item[1] -%>
               </div>
             </div>

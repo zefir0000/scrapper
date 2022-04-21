@@ -19,6 +19,7 @@ const PagesController = require('../controllers/PagesController');
 
 router.get('/', PagesController.home);
 router.get('/motocykl/:slug', PagesController.motocykl);
+router.get('/wyszukaj', PagesController.search);
 
 // inne
 // router.get('/test', ApplicationsController.muziker)
