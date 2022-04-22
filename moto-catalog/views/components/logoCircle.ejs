@@ -1,0 +1,42 @@
+<style>
+
+  .res-circle {
+  /* (A) PERCENTAGE WIDTH & BORDER RADIUS */
+  width: 200px;
+  border-radius: 50%;
+
+  /* (B) BACKGROUND COLOR */
+  background: linear-gradient(135deg, #a5b1b6 0%,#313130 100%);
+  box-shadow: inset -8px -7px 4px 0px rgba(0,0,0,0.3);
+
+  /* (C) NECESSARY TO POSITION TEXT BLOCK */
+  line-height: 0;
+  position: relative;
+}
+
+/* (D) MATCH HEIGHT */
+.res-circle::after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+/* (E) TEXT BLOCK */
+.circle-txt {
+  /* (E1) CENTER TEXT IN CIRCLE */
+  position: absolute;
+  color: white;
+  bottom: 50%;
+  width: 100%;
+  font-size: 32px;
+  text-align: center;
+
+  /* (E2) THE FONT - NOT REALLY IMPORTANT */
+  font-family: arial, sans-serif;
+  font-weight: bold;
+}
+  </style>
+
+<div class="res-circle">
+  <div class="circle-txt"><%= name %></div>
+</div>
