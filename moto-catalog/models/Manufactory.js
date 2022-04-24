@@ -15,7 +15,7 @@ module.exports.update = async (data) => {
     .where({ id: data.id })
     .update({
       name: data.name,
-      custom: data.custom
-
+      custom: data.custom,
+      logo: data.logo
   }).catch(e => { return { status: 'fail', error: e } })
 };

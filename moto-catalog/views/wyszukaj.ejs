@@ -58,9 +58,12 @@
         <![endif]-->
 	<%- include('../views/components/header.ejs'); -%>
 		<br><br>
+		<% if (!list.length) { %>
 
-
-		<%- include('../views/components/artCafels.ejs', { recent: recent }); -%>
+			<%- include('../views/components/noContent.ejs', { recent: recent }); -%>
+			<% } else { %>
+<br>
+		<%- include('../views/components/artCafels.ejs', { recent: list, title: "Wyniki wyszukiwania: " }); -%>
 		<% if (hasNext) { %>
 			<form action="/wyszukaj" method="GET" role="search" type="search" style="width:100%; text-align:center;">
 				<input type="text" style="display: none" name="nazwa" value="" id="pagin-name">
@@ -70,6 +73,9 @@
 			</form>
 
 			<% } %>
+			<% } %>
+
+
 
 <br><br>
 			<!-- Include all js compiled plugins (below), or include individual files as needed -->

@@ -1,30 +1,36 @@
 <!--new-arrivals start -->
-<section id="new-arrivals" class="new-arrivals">
+<section id="producenci" class="new-arrivals">
   <div class="container">
     <div class="section-header">
       <h2>Producenci motocykli</h2>
-      <!-- <%= JSON.stringify(factories) %> -->
 
     </div>
     <!--/.section-header-->
     <div class="new-arrivals-content">
+        <div style="width:100%; text-align:center; display: none;" id="wstecz">
+            <form action="/producenci" method="GET" role="search" type="search" style="width:100%; text-align:center;">
+              <input type="number" style="display: none" name="offset" id="wstecz-offset">
+
+              <button class="badge" style="font-size: 28px; padding: 10px 30px; margin: 20px" @click="return q.value"> Wstecz             </button>
+
+              </form>
+          </div>
+
       <div class="row">
         <% factories.forEach(function(item) { %>
 
           <div class="col-md-3 col-sm-4">
             <div class="single-new-arrival">
-              <div class="single-new-arrival-bg">
-                <img src="assets/images/collection/arrivals1.png" alt="new-arrivals images">
-                <div class="single-new-arrival-bg-overlay"></div>
+              <a href="/producent/<%= item.name %>"><div class="single-new-arrival-bg">
+                  <img src="<%= item.logo %>" alt="<%= item.name %>" onerror="this.onerror=null;this.src='/assets/images/logosy/logoplaceholder.png';">
+                  <div class="single-new-arrival-bg-overlay"></div>
 
-
-              </div>
-              <h4><a href="/producent/<%= item.name %>"> <%= item.name %>
-                </a></h4>
+                </div></a>
+                <h4 ><a href="/producent/<%= item.name %>" style="min-height: 40px;"> <%= item.name %>
+                  </a></h4>
             </div>
           </div>
           <% }); %>
-
       </div>
     </div>
   </div>

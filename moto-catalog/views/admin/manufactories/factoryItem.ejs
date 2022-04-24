@@ -1,0 +1,34 @@
+<table class="table__style">
+  <thead>
+    <table class="table__style">
+      <td>
+        <img src="<%= factory.logo %>" style="width: 160px; max-height: 150px" alt="###__NOT_FOUND__##" />
+      </td>
+      <td style="width: 60%;">
+        <h2>
+          <span style="float:right; padding: 10px"><%= factory.name %></span>
+        </h2>
+      </td>
+      <td style="width:20%">
+        <p>
+          date:
+          <%= factory.created_at %>
+        </p>
+      </td>
+
+      <td style="width:30%">
+        <form class="lightbox__form" action='/admin/manufactories/<%= factory.id %>' method="POST" target="_blank">
+          <div class="lightbox__form-control"><label class="lightbox__label">Name</label><input class="lightbox__input" type="text"
+              name="name" value="<%= factory.name %>"></div>
+          <div class="lightbox__form-control"><label class="lightbox__label">Logo</label><input class="lightbox__input" type="text"
+              name="logo" value="<%= factory.logo %>"></div>
+
+          <div class="lightbox__actions"><button class="btn btn--primary">Save</button></div>
+        </form>
+
+      </td>
+
+      <hr/>
+    </table>
+  </thead>
+</table>

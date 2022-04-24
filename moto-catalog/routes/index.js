@@ -3,6 +3,8 @@ const router = express.Router();
 // const multer = require('multer');
 
 const PagesController = require('../controllers/PagesController');
+const AdminController = require('../controllers/Admin.controller');
+
 // const MotoController = require('../controllers/MotoController');
 // const OfferController = require('../controllers/OfferController')
 // const ClientsController = require('../controllers/ClientsController')
@@ -20,6 +22,12 @@ const PagesController = require('../controllers/PagesController');
 router.get('/', PagesController.home);
 router.get('/motocykl/:slug', PagesController.motocykl);
 router.get('/wyszukaj', PagesController.search);
+router.get('/producenci', PagesController.producenci);
+router.get('/producent/:name', PagesController.producent);
+
+
+router.get('/admin/manufactories', AdminController.manufactories);
+router.post('/admin/manufactories/:id', AdminController.manufactoriesModify);
 
 // inne
 // router.get('/test', ApplicationsController.muziker)

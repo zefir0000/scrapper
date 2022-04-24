@@ -531,7 +531,7 @@ ul.cart-list > li.total {
 /*-------------------------------------
         5. New-arrivals
 --------------------------------------*/
-.new-arrivals {padding:85px 0 70px;}
+.new-arrivals {padding:65px 0 30px;}
 .new-arrivals-content{margin-top: 80px;}
 
 .single-new-arrival{margin-bottom: 50px;text-align: center;}
@@ -738,7 +738,7 @@ span.feature-review {margin-left: 10px;}
 /*-------------------------------------
         8.  Blog
 --------------------------------------*/
-.blog {padding:80px 0;}
+.blog {padding:30px 0;}
 
 /*.single-blog*/
 .single-blog{
