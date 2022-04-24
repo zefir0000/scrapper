@@ -7,7 +7,7 @@ module.exports = {
     connection: {
       host: 'localhost',
       user: 'root',
-      password: 'Admin123',
+      password: 'KnybsAct0j@',
       database: 'Moto_DB',
       port: 3306
     },
@@ -25,11 +25,11 @@ module.exports = {
   production: {
     client: 'mysql2',
     connection: {
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASS,
-      database: process.env.DB_NAME,
-      port: process.env.DB_PORT
+      host: 'localhost',
+      user: 'root',
+      password: 'KnybsAct0j@',
+      database: 'Moto_DB',
+      port: 3306
     },
     pool: {
       min: 2,
