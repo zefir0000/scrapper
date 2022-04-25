@@ -107,5 +107,5 @@ exports.producent = async (req, res) => {
     .where('manufactory', req.params.name)
     .count('modelId as count').first()
 
-  res.render('producent', { recent: response, hasNext: count > Number(offset) + limit })
+  res.render('producent', { recent: response, hasNext: count > Number(offset) + limit, title: req.params.name })
 };
