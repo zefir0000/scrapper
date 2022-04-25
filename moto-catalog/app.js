@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
+const midLog = require("./middlewares/midLoguseragent");
 
 // const basicAuth = require("./middlewares/basicAuth");
 const errorsHandler = require('./middlewares/errors');
@@ -19,6 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json({ limit: '10mb'}));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 // app.use(basicAuth )
+app.use(midLog);
 
 // app.use('/admin/', cors(), routesAdmin);
 
