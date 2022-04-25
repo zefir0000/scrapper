@@ -8,7 +8,7 @@ exports.home = async (req, res) => {
   const factories = await knex.from('Manufactories').select('Manufactories.name', 'Manufactories.logo').count('name as count')
     .orderBy('count', 'desc')
     .join('Stats', { 'Manufactories.name': 'Stats.manufactoryId' }).groupBy('name', 'logo')
-    .limit(20)
+    .limit(12)
 
   const recent = await knex.from('Models')
     .select('Models.modelId', 'Details.detailsId', 'Gallery.images', 'Models.slug', 'Models.name', 'Models.years', 'Models.manufactory')
@@ -18,21 +18,23 @@ exports.home = async (req, res) => {
     .join('Stats', { 'Models.modelId': 'Stats.modelId' })
     .join('Details', { 'Models.detailsId': 'Details.detailsId' })
     .join('Gallery', { 'Details.galleryId': 'Gallery.galleryId' })
-    .limit(12)
+    .limit(24)
+    
   const response = recent.map(item => ({ ...item, images: JSON.parse(item.images), years: JSON.parse(item.years) }))
 
   res.render('index', { count: clientCount[0]['count(*)'], factories: factories, recent: response });
 };
 exports.producenci = async (req, res) => {
-  const offset = req.query.offset || 0;
+  const offset = 24//req.query.offset || 24;
   const limit = 24
 
-  const factories = await knex.from('Manufactories').select('Manufactories.name', 'Manufactories.logo')
+  const factories = await knex.from('Manufactories').count('Manufactories.name as count')
+  .select('Manufactories.name', 'Manufactories.logo')
     .orderBy('name', 'asc')
-    .limit(limit).offset(offset)
-  const { count } = await knex.from('Manufactories').count('name as count').first()
-
-  res.render('producenci', { factories: factories, hasNext: count > Number(offset) + limit });
+    .join('Models', { 'Models.manufactory': 'Manufactories.name' }).groupBy('Manufactories.name', 'Manufactories.logo')
+    // .limit(limit).offset(offset)
+  // const { count } = await knex.from('Manufactories').count('name as count').first()
+  res.render('producenci', { factories: factories, hasNext: false });//count > Number(offset) + limit });
 };
 exports.motocykl = async (req, res) => {
   const moto = await knex.from('Models').where('slug', req.params.slug)

@@ -17,7 +17,6 @@ exports.manufactoriesModify = async (req, res) => {
   //     }
   //     console.log('Directory created successfully!');
   // });
-  console.log(logo)
     await factoryModel.update({
       id: req.params.id,
       name: req.body.name,
