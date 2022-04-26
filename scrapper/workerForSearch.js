@@ -3,32 +3,33 @@ const knex = require("../moto-catalog/knex");
 const slugConverter = require('../moto-catalog/helpers/slugConverter')
 
 async function worker() {
-  const list = await knex('Models')
+
+  const list = await knex('Models').orderBy('modelId')
     .join('Details', { 'Models.detailsId': 'Details.detailsId' })
   for (step = 0; step < list.length; step++) {
-    try{
-    const item = list[step]
-    console.log(step, item.modelId)
-    const specs = JSON.parse(item.specs)
-    const year = specs.find(item => item[0] === 'Year')[1]
-    const years = yearsArray(year);
-    const name1 = specs.find(item => item[0] === 'Make Model')
-    const name = name1 ? name1[1].replace(item.manufactory, '').trim() : item.name;
+    try {
+      const item = list[step]
+      console.log(step, item.modelId)
+      const specs = JSON.parse(item.specs)
+      const year = specs.find(item => item[0] === 'Year')[1]
+      const years = yearsArray(year);
+      const name1 = specs.find(item => item[0] === 'Make Model')
+      const name = name1 ? name1[1].replace(item.manufactory, '').trim() : item.name;
 
-    await knex('Models').where({ modelId: item.modelId })
-      .update({
-        years: JSON.stringify(years),
-        name,
-        search: `${item.manufactory} ${name} ${years.join(' ')}`,
-        slug: slugConverter(`${name}-${year}`)
-      })
+      await knex('Models').where({ modelId: item.modelId })
+        .update({
+          years: JSON.stringify(years),
+          name,
+          search: `${item.manufactory} ${name} ${years.join(' ')}`,
+          slug: slugConverter(`${name}-${year}`)
+        })
       console.log(step, JSON.stringify(years),
-      name,
-      `${item.manufactory} ${name} ${years.join(' ')}`,
-       slugConverter(name))
-      } catch(e) {
-        console.log(e)
-      }
+        name,
+        `${item.manufactory} ${name} ${years.join(' ')}`,
+        slugConverter(name))
+    } catch (e) {
+      console.log(e)
+    }
   }
 
 }

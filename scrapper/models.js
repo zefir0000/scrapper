@@ -28,7 +28,7 @@ module.exports.models = async (link) => {
       const hrefNextPage = dom.getElementsByTagName('a').find(item => /next/gmi.test(item.textContent))
       const nextPage = hrefNextPage ? hrefNextPage.attributes.find(i => i.name === 'href').value : null;
 
-      const tables = list.match(/(?<=border="[2-8]")(.*?)<\/table>/gs)
+      const tables = list.match(/(?<=border="[1-8]")(.*?)<\/table>/gs)
       const modelList = await Promise.all(tables.map(tab => {
         const table1 = parser.parseFromString(tab);
         const row = table1.getElementsByTagName('tr').flatMap(tr => {
