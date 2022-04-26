@@ -52,10 +52,9 @@ function yearsArray(year) {
   return years
 }
 
-async function details(model) {
-  const offset = 0
-  const modelDb = await knex('Models').select('*').limit(50000).offset(offset)
-  const asd = await Promise.all(await modelDb.map(async (item, index) => {
+async function details() {
+  const modelDb = await knex('Models');
+  await Promise.all(await modelDb.map(async (item, index) => {
     // for (let i = 0; i < modelDb.length; i++) {
     // let item = modelDb[i]
     const detailsDb = await knex('Details').select('*').where('detailsId', item.detailsId).first()
@@ -73,11 +72,11 @@ async function details(model) {
         specs: JSON.stringify(details.tableSpecs),
         galleryId: galleryId
       }).catch(e => { console.error(e, ' ERRERr'); return; })
-      console.log(index, modelDb.length ,' add details for: ', item.name)
-    } else ( console.log(index, modelDb.length))
-  // }
+      console.log(index, modelDb.length, ' add details for: ', item.name)
+    } else { console.log(index, modelDb.length) }
+    return;
   }));
-console.log('finished')
+  console.log('finished')
   return;
 }
 
