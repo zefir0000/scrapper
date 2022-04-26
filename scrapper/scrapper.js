@@ -80,7 +80,7 @@ async function details() {
   return;
 }
 
-details()
+models()
   .catch(error => {
     console.log(error)
     // process.exit(1);
