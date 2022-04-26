@@ -8,6 +8,14 @@ exports.manufactories = async (req, res) => {
 
   res.render('admin/manufactories', { manufactories });
 };
+exports.home = async (req, res) => {
+  const manufactories = await knex.from('Manufactories').count('id as count').first()
+  const models = await knex.from('Models').count('modelId as count').first()
+  const details = await knex.from('Details').count('detailsId as count').first()
+
+
+  res.render('admin/index', { manufactories: manufactories.count, models: models.count, details: details.count   });
+};
 exports.manufactoriesModify = async (req, res) => {
   const logo = await ImageServices.factoryLogo(req.body.logo, `${(req.body.name)}-logo`)
     .catch(e => res.json('bad request image head'));
