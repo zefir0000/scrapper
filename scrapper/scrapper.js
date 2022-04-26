@@ -81,7 +81,7 @@ console.log('finished')
   return;
 }
 
-details()
+models()
   .catch(error => {
     console.log(error)
     // process.exit(1);
