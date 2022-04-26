@@ -11,14 +11,14 @@ const { uuid } = require('uuidv4');
 const BASE_URL = 'https://www.motorcyclespecs.co.za/'
 
 async function models() {
-  const factoriesDb = await knex().from('Manufactories').select('*')
+  const factoriesDb = await knex('Manufactories').select('*')
   await Promise.all(factoriesDb.map(async factoryDb => {
 
     const modelList = await modelScrap.models(BASE_URL + factoryDb.custom)
     await Promise.all(modelList.map(async item => {
       const { year, name } = item;
       const fixName = name.replace(/&quot;/gm, '"').trim()
-      const modelDb = await knex().from('models').select('*').where('name', fixName).first()
+      const modelDb = await knex('Models').select('*').where('name', fixName).first()
       if (!modelDb) {
         await ModelsModel.create({
           modelId: uuid(),
@@ -81,7 +81,7 @@ console.log('finished')
   return;
 }
 
-details()
+models()
   .catch(error => {
     console.log(error)
     // process.exit(1);
