@@ -11,14 +11,14 @@ module.exports = async function (url, imageName, arraybuffer) {
       responseType: 'arraybuffer'
     })
       .then(async function ({ data: imageBuffer }) {
-
+        console.log(__dirname)
         await sharp(imageBuffer)
             .resize(1280, 1280, {
               kernel: sharp.kernel.nearest,
               fit: 'inside'
             })
             .jpeg({ quality: 80 })
-            .toFile('public' + original)
+            .toFile(__dirname.replace('helpers', 'public') + original)
             .then(info => { console.info('img save') });
 
           return { status: 'success' }
@@ -33,7 +33,7 @@ module.exports = async function (url, imageName, arraybuffer) {
         fit: 'inside'
       })
       .jpeg({ quality: 80 })
-      .toFile('public' + original)
+      .toFile(__dirname.replace('helpers', 'public') + original)
       .then(info => { console.info(info) });
   }
   return { original }
