@@ -1,6 +1,7 @@
 
 const knex = require("../moto-catalog/knex");
 const slugConverter = require('../moto-catalog/helpers/slugConverter')
+const translate = require('translate');
 
 async function worker() {
 
@@ -31,7 +32,6 @@ async function worker() {
       console.log(e)
     }
   }
-
 }
 
 function yearsArray(year) {
@@ -50,7 +50,30 @@ function yearsArray(year) {
   return years
 }
 
-worker()
+async function workerTranslate() {
+
+  const list = await knex('Details').orderBy('detailsId')
+  for (step = 0; step < list.length; step++) {
+    try {
+      const item = list[step]
+      const descEn = item.description
+      const descPl = await translate(descEn, { to: 'pl' }).catch(err => {
+        console.error(err)
+      })
+
+      await knex('Details').where({ detailsId: item.detailsId })
+        .update({
+          descriptionPl: descPl,
+
+        })
+      console.log(step, item.detailsId)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+}
+
+workerTranslate()
   .catch(error => {
     console.log(error)
     // process.exit(1);
