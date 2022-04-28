@@ -28,6 +28,7 @@ router.get('/producent/:name', PagesController.producent);
 
 router.get('/admin/manufactories', AdminController.manufactories);
 router.post('/admin/manufactories/:id', AdminController.manufactoriesModify);
+router.get('/admin/home', AdminController.home);
 
 // inne
 // router.get('/test', ApplicationsController.muziker)
