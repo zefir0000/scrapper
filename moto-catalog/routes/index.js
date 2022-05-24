@@ -24,7 +24,7 @@ router.get('/motocykl/:slug', PagesController.motocykl);
 router.get('/wyszukaj', PagesController.search);
 router.get('/producenci', PagesController.producenci);
 router.get('/producent/:name', PagesController.producent);
-router.get('/find', PagesController.motoTrade);
+// router.get('/find', PagesController.motoTrade);
 
 
 router.get('/admin/manufactories', AdminController.manufactories);
