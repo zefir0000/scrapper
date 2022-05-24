@@ -1,0 +1,27 @@
+<table class="table__style">
+  <thead>
+    <table class="table__style">
+
+      <td style="width: 60%;">
+          <% specs.specs.forEach(function(data) { %>
+            <span style="background-color: #c0010143; padding: 5px 10px; margin: 2px 10px; min-width: 300px; float: left; border-radius: 3px; border: red solid 1px;">
+              <%= data[0] %> :
+                <%= data[1] %>
+            </span>
+            <% }); %>
+      </td>
+      <td style="width:20%">
+        <p>
+          date:
+          <%= specs.created_at %>
+         <h2><%= specs.specsL %></h2>
+         <%= specs.id %>
+         <form action='/admin/specs/<%= specs.id %>' method="GET" target="_blank">
+          <div class="actions"><button class="icon" @click=""><img src="/icons/edit.png" width="20px" /></button></div>
+        </form>
+        </p>
+      </td>
+
+    </table>
+  </thead>
+</table>

@@ -5,12 +5,16 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" />
   <link rel="stylesheet" href="/admin/css/main.css" />
 </head>
+
 <body>
   <div class="home dog-app">
     <%- include('./menu.ejs'); -%>
-manufactories:           <%= manufactories %>
-models:           <%= models %>
-details:           <%= details %>
+      <% details.forEach(function(specs) { %>
+        <%- include('./specs/specsItem.ejs', { specs: specs }); -%>
+
+          <% }); %>
+
   </div>
-  </body>
+</body>
+
 </html>

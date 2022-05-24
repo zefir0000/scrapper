@@ -1,0 +1,29 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" />
+  <!-- <link rel="stylesheet" href="/admin/css/main.css" /> -->
+</head>
+
+<body>
+  <div class="home dog-app">
+    <div class="lightbox">
+      <div class="lightbox__content">
+        <form class="lightbox__form" action="/admin" method="GET"><button class="btn" @click="">X</button></form>
+        <!-- Format : BMW gs 800 gt adventure, 2009-2011 -->
+
+        <h1 class="lightbox__header">Edit specs</h1>
+        <form class="lightbox__form" action='/admin/specs/<%= specs.detailsId %>' method="POST">
+            <div class="lightbox__form-control"><label class="lightbox__label">Description</label>
+              <textarea class="lightbox__input" style="font-size:12; width: 100%" placeholder="" rows="40" name="specs"><%= specs.specs %></textarea></div>
+
+            <div class="lightbox__actions"><button class="btn btn--primary">Accept</button></div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue" type="text/javascript"></script>
+    <script src="/js/app.js"></script>
+</body>
+
+</html>

@@ -24,11 +24,16 @@ router.get('/motocykl/:slug', PagesController.motocykl);
 router.get('/wyszukaj', PagesController.search);
 router.get('/producenci', PagesController.producenci);
 router.get('/producent/:name', PagesController.producent);
+router.get('/find', PagesController.motoTrade);
 
 
 router.get('/admin/manufactories', AdminController.manufactories);
 router.post('/admin/manufactories/:id', AdminController.manufactoriesModify);
 router.get('/admin/home', AdminController.home);
+router.get('/admin/specs', AdminController.details);
+router.get('/admin/specs/:id', AdminController.editSpecs);
+router.post('/admin/specs/:id', AdminController.editSpecsSave);
+
 
 // inne
 // router.get('/test', ApplicationsController.muziker)
