@@ -8,7 +8,7 @@
 @media screen and (max-width:1199px){
 	nav.navbar.bootsnav ul.nav > li > a { padding: 35px 10px;}
 	.dropdown-menu {left: -200px;}
-	
+
 	.welcome-hero-txt h2,.welcome-hero-txt h3 {font-size: 40px;}
 	.welcome-hero-txt h4 {font-size: 28px;}
 
@@ -43,16 +43,17 @@
 }/*max-width:991px*/
 
 @media screen and (max-width:768px){
-    
+
 }/*max-width:768px*/
 
 @media screen and (max-width:767px){
 	.wrap-sticky nav.navbar.bootsnav.sticked nav.navbar.bootsnav ul.nav > li > a {padding: 15px 25px;}
-	
+
 	.single-welcome-hero {height:auto;background: transparent;padding: 100px 0;display: block;}
 
 	.feature-content,.blog-content,.new-arrivals-content{margin-top:40px;}
 	
+
 }/*max-width:767px*/
 
 @media screen and (max-width: 660px){
@@ -73,14 +74,14 @@
 
 @media screen and (max-width: 480px){
 	.welcome-hero h2 {font-size: 30px;}
-	
+
 }/*max-width:480px*/
 
 @media screen and (max-width: 440px){
 	nav.navbar.bootsnav .dropdown .megamenu-content .col-menu .title{padding: 10px 0px;}
 	.welcome-hero-txt h2,{font-size: 24px;line-height: 1.5;}
 	.welcome-hero-txt h3,.welcome-hero-txt h4 {font-size: 24px;}
-	
+
 }/*max-width:400px*/
 
 @media screen and (max-width:350px){
@@ -91,6 +92,5 @@
 }/*max-width:350px*/
 
 @media screen and  (max-width: 320px){
-	
-}/*max-width:320px*/
 
+}/*max-width:320px*/

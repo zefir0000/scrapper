@@ -9,6 +9,15 @@
 <body>
   <div class="home dog-app">
     <%- include('./menu.ejs'); -%>
+    <div class="wrapper">
+      <section class="search">
+
+        <form class="search__form" action="/admin/specs" method="GET" role="search" type="search" style="display: flex; flex-wrap: wrap">
+
+          <input class="search__input" placeholder="Wyszukaj ..." type="text" name="name" id="name" />
+          <div class="actions_inline"><button class="btn btn--primary" @click="return q.value">search</button></div>
+          </form>
+        </section>
       <% details.forEach(function(specs) { %>
         <%- include('./specs/specsItem.ejs', { specs: specs }); -%>
 

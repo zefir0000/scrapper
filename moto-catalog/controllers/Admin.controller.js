@@ -32,7 +32,7 @@ exports.manufactoriesModify = async (req, res) => {
 exports.details = async (req, res) => {
   const details = await knex.from('Details')
   .select(knex.raw('Details.created_at, Details.detailsId, Details.specs, LENGTH(Details.specs) as len'))
-
+  .where('specs', 'LIKE', `%${req.query.name}%`)
   .orderBy('len', 'desc').limit(100)
 
   const specs = details.map(i => {
